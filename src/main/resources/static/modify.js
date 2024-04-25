@@ -2,7 +2,6 @@ $(function(){
     const id = window.location.search.substring(1);
     const url = "/getOneTicket?"+id;
     $.get(url,function(ticket){
-        console.log("Data mottatt:", ticket);
         $("#id").val(ticket.id);
         $("#movie").val(ticket.movie);
         $("#quantity").val(ticket.quantity);

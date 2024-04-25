@@ -1,5 +1,6 @@
 package oslomet.oblig3data1700;
 
+// Ticket class
 public class Ticket {
     private int id;
     private int quantity;
@@ -9,9 +10,11 @@ public class Ticket {
     private String email;
     private String phone;
 
+    // Empty constructor
     public Ticket(){
     }
 
+    // Constructor
     public Ticket(int id, String movie, int quantity, String firstname, String lastname, String email, String phone) {
         this.id = id;
         this.movie = movie;
@@ -22,6 +25,7 @@ public class Ticket {
         this.phone = phone;
     }
 
+    // Getters and setters
     public int getId() {
         return id;
     }

@@ -8,14 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
+// Defining class as web-based controller
 @RestController
 public class TicketController {
     @Autowired
     TicketRepository rep;
 
+    // POST-requests for "/save"-endpoint, converting JSON to Ticket object
     @PostMapping("/save")
     public void save(@RequestBody Ticket ticket){rep.save(ticket);}
 
+    // Returning list of Ticket objects
     @GetMapping("/getAll")
     public List<Ticket> getAll() {
         return rep.getAll();

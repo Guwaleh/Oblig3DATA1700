@@ -2,49 +2,47 @@ $(function () {
     getAll();
 });
 
-function buyTicket() {
-    let movie = $("#movie").val();
-    let quantity = $("#quantity").val();
-    let firstname = $("#firstname").val();
-    let lastname = $("#lastname").val();
-    let email = $("#email").val();
-    let phone = $("#phone").val();
-
-    if (movie === "") {
+function isValidInput(movie, quantity, firstname, lastname, phone, email) {
+    const phoneRegex = /^\d{8}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!movie) {
         alert("Pick a movie");
-        return;
+        return false;
     }
-    if (parseInt(quantity) <= 0) {
+    if (parseInt(quantity) < 1) {
         alert("Larger quantity than 0 required");
-        return;
+        return false;
     }
-    if (firstname === "") {
-        alert("Provide first name");
-        return;
+    if (!firstname) {
+        alert("Provide firstname");
+        return false;
     }
-    if (lastname === "") {
-        alert("Provide last name");
-        return;
+    if (!lastname) {
+        alert("Provide lastname");
+        return false;
     }
-
-    let phoneRegex = /^\d{8}$/;
     if (!phoneRegex.test(phone)) {
         alert("Provide a valid phone number");
-        return;
+        return false;
     }
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         alert("Provide a valid email address");
-        return;
+        return false;
     }
-    const ticket = {
-        movie: movie,
-        quantity: quantity,
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        phone: phone
-    };
+    return true;
+}
+
+function buyTicket() {
+    const movie = $("#movie").val();
+    const quantity = $("#quantity").val();
+    const firstname = $("#firstname").val();
+    const lastname = $("#lastname").val();
+    const email = $("#email").val();
+    const phone = $("#phone").val();
+
+    if (!isValidInput(movie, quantity, firstname, lastname, phone, email)) return;
+
+    const ticket = { movie, quantity, firstname, lastname, email, phone };
 
     $.ajax({
         url: '/save',
@@ -58,13 +56,7 @@ function buyTicket() {
             alert('Error saving ticket: ' + response.responseText);
         }
     });
-
-    $("#movie").val("");
-    $("#quantity").val("");
-    $("#firstname").val("");
-    $("#lastname").val("");
-    $("#email").val("");
-    $("#phone").val("");
+    $("#movie, #quantity, #firstname, #lastname, #email, #phone").val("");
 }
 
 function getAll() {
